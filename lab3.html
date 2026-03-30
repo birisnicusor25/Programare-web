@@ -1,0 +1,176 @@
+
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<title>Programare Web – Laborator 05 (Async JS)</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+#container{
+    display: flex;
+    gap: 20px;
+}
+textarea{
+    width: 420px;
+    height: 260px;
+}
+#myconsole{
+    width: 420px;
+    height: 260px;
+    border: 1px solid black;
+    padding: 10px;
+    overflow-y: auto;
+    background: #f2f2f2;
+}
+button{
+    margin: 5px 5px 5px 0;
+}
+.box{
+    width: 200px;
+    height: 80px;
+    border: 2px solid black;
+    background: lightgray;
+    margin-top: 10px;
+    text-align: center;
+    line-height: 80px;
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+
+<p><b>Programare Web – Laborator 05 (Asynchronous JavaScript)</b></p>
+
+<div id="container">
+    <div>
+        <textarea id="textArea"></textarea><br>
+        <button onclick="run()">RUN</button>
+        <button onclick="clearAll()">CLEAR</button>
+
+        <ul>
+            <li><a href="javascript:loadEx(1)">Ex 1 – Array sincron</a></li>
+            <li><a href="javascript:loadEx(2)">Ex 2 – Array asincron (2 sec)</a></li>
+            <li><a href="javascript:loadEx(3)">Ex 3 – setTimeout (3 sec)</a></li>
+            <li><a href="javascript:loadEx(4)">Ex 4 – setInterval (5 sec)</a></li>
+            <li><a href="javascript:loadEx(5)">Ex 5 – Exemple async (callback)</a></li>
+        </ul>
+
+        <div id="colorBox" class="box">Color box</div>
+    </div>
+
+    <div id="myconsole">my console</div>
+</div>
+
+<script>
+/* consola proprie */
+const my = {
+    log: function(msg){
+        document.getElementById("myconsole").innerHTML += msg + "<br>";
+    }
+};
+
+/* RUN */
+function run(){
+    document.getElementById("myconsole").innerHTML = "";
+    try{
+        eval(document.getElementById("textArea").value);
+    }catch(e){
+        my.log("Eroare: " + e.message);
+    }
+}
+
+/* CLEAR */
+function clearAll(){
+    document.getElementById("textArea").value = "";
+    document.getElementById("myconsole").innerHTML = "";
+}
+
+/* ================= EXERCITII ================= */
+
+/* EX 1 – Array sincron */
+const ex1 = `
+// EX 1 – afișare sincronă
+let carti = ["Moromeții", "Ion", "Baltagul", "Enigma Otiliei", "Maitreyi"];
+
+carti.forEach((titlu, i) => {
+    my.log((i + 1) + ". " + titlu);
+});
+`;
+
+/* EX 2 – Array asincron */
+const ex2 = `
+// EX 2 – afișare asincronă (2 sec)
+function ArrayPlusDelay(array, delegate, delay){
+    array.forEach((el, i) => {
+        setTimeout(() => {
+            delegate(el, i);
+        }, i * delay);
+    });
+}
+
+let carti = ["Moromeții", "Ion", "Baltagul", "Enigma Otiliei", "Maitreyi"];
+
+ArrayPlusDelay(carti, (el, i) => {
+    my.log((i + 1) + ". " + el);
+}, 2000);
+`;
+
+/* EX 3 – setTimeout */
+const ex3 = `
+// EX 3 – schimbare culoare după 3 sec
+my.log("Așteaptă 3 secunde...");
+setTimeout(() => {
+    document.getElementById("colorBox").style.background = "orange";
+    my.log("Culoarea s-a schimbat după 3 secunde");
+}, 3000);
+`;
+
+/* EX 4 – setInterval */
+const ex4 = `
+// EX 4 – schimbare culoare la fiecare 5 sec
+let culori = ["red", "green", "blue", "purple"];
+let i = 0;
+
+setInterval(() => {
+    document.getElementById("colorBox").style.background = culori[i];
+    my.log("Background: " + culori[i]);
+    i = (i + 1) % culori.length;
+}, 5000);
+`;
+
+/* EX 5 – Exemple async + callback */
+const ex5 = `
+// EX 5 – ordine setTimeout
+setTimeout(() => { my.log("this is the first message") }, 5000);
+setTimeout(() => { my.log("this is the second message") }, 3000);
+setTimeout(() => { my.log("this is the third message") }, 1000);
+
+// callback
+function add(x, y, callback){
+    my.log("start");
+    setTimeout(() => {
+        callback(x + y);
+    }, 2000);
+}
+add(10, 20, function(result){
+    my.log("Rezultat: " + result);
+});
+`;
+
+const arrex = ["", ex1, ex2, ex3, ex4, ex5];
+
+function loadEx(nr){
+    document.getElementById("textArea").value = arrex[nr];
+}
+
+/* încarcă implicit exercițiul 1 */
+loadEx(1);
+</script>
+
+</body>
+</html>
