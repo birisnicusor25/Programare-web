@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PRW 2022 – Laborator 05 (Async JavaScript)</title>
+  <style>
+    body{font-family:Arial, Helvetica, sans-serif;margin:18px;background:#fff;color:#111}
+    p.title{margin:0 0 12px 0;font-size:18px;font-weight:700}
+    #container{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+    #d1{min-width:360px;max-width:520px}
+    textarea{
+      width:520px;max-width:92vw;height:260px;padding:10px;border-radius:10px;border:1px solid #222;
+      box-sizing:border-box;font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:13px;line-height:1.35
+    }
+    button{padding:10px 14px;border:0;border-radius:12px;background:#111;color:#fff;cursor:pointer;margin-right:8px;box-shadow:0 6px 18px rgba(0,0,0,.12)}
+    button.secondary{background:#444}
+    button:active{transform:translateY(1px)}
+    #myconsole{
+      width:520px;max-width:92vw;height:320px;border:1px solid #222;border-radius:12px;padding:10px;overflow:auto;background:#f4f4f4;
+      box-shadow:0 6px 18px rgba(0,0,0,.08)
+    }
+    .toolbar{margin:10px 0 10px 0}
+    .hint{font-size:12px;color:#444;margin:8px 0 10px 0}
+    ul{margin:10px 0 0 18px;padding:0}
+    li{margin:6px 0}
+    a{color:#0a58ca;text-decoration:none}
+    a:hover{text-decoration:underline}
+    .box{width:220px;height:86px;border:2px solid #111;background:lightgray;margin-top:12px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:700}
+  </style>
+</head>
+
+<body>
+  <p class="title">Programare Web – Laborator 05 (Asynchronous JavaScript)</p>
+
+  <div id="container">
+    <div id="d1">
+      <textarea id="textArea"></textarea>
+      <div class="toolbar">
+        <button onclick="runCode()">RUN</button>
+        <button class="secondary" onclick="clearAll()">CLEAR</button>
+      </div>
+
+      <div class="hint">Alege un exercițiu de mai jos ca să se încarce codul în textarea, apoi apasă RUN.</div>
+
+      <ul>
+        <li><a href="javascript:loadEx(1);">Ex 1 – Array (sincron) + numerotare</a></li>
+        <li><a href="javascript:loadEx(2);">Ex 2 – Array (asincron) afișare la 2 sec</a></li>
+        <li><a href="javascript:loadEx(3);">Ex 3 – Schimbare background după 3 sec (setTimeout)</a></li>
+        <li><a href="javascript:loadEx(4);">Ex 4 – Schimbare background la fiecare 5 sec (setInterval)</a></li>
+        <li><a href="javascript:loadEx(5);">Bonus – Exemple tipice (ordine setTimeout / callback)</a></li>
+      </ul>
+
+      <div id="colorBox" class="box">Color box</div>
+    </div>
+
+    <div>
+      <div id="myconsole">my console</div>
+    </div>
+  </div>
+
+  <script>
+    // Consolă proprie (cerință tipică din laborator)
+    const my = {
+      log: (msg) => {
+        const c = document.getElementById('myconsole');
+        c.innerHTML += String(msg) + '<br>';
+        c.scrollTop = c.scrollHeight;
+      }
+    };
+
+    // RUN: execută codul din textarea
+    function runCode(){
+      document.getElementById('myconsole').innerHTML = '';
+      try{
+        eval(document.getElementById('textArea').value);
+      }catch(e){
+        my.log('Eroare: ' + e.message);
+      }
+    }
+
+    // CLEAR: șterge textarea + consolă
+    function clearAll(){
+      document.getElementById('textArea').value = '';
+      document.getElementById('myconsole').innerHTML = '';
+    }
+
+    // -------- Exerciții (conform PDF) --------
+
+    // Ex 1 – array cu 5 titluri de cărți, afișare sincronă (forEach)
+    const ex1 = `// EX 1 (sincron): array cu 5 titluri + afișare numerotată
+let carti = ["Moromeții", "Ion", "Baltagul", "Enigma Otiliei", "Maitreyi"];
+
+carti.forEach((titlu, i) => {
+  my.log((i + 1) + ". " + titlu);
+});
+`;
+
+    // Ex 2 – aceeași afișare, dar asincron: fiecare titlu după 2 sec
+    const ex2 = `// EX 2 (asincron): fiecare element se afișează la 2 secunde
+function ArrayPlusDelay(array, delegate, delay) {
+  array.forEach((el, i) => {
+    setTimeout(() => {
+      delegate(el, i);
+    }, i * delay);
+  });
+}
+
+let carti = ["Moromeții", "Ion", "Baltagul", "Enigma Otiliei", "Maitreyi"];
+
+ArrayPlusDelay(carti, (el, i) => {
+  my.log((i + 1) + ". " + el);
+}, 2000);
+`;
+
+    // Ex 3 – schimbare culoare după 3 sec (setTimeout)
+    const ex3 = `// EX 3: schimbă background după 3 secunde (setTimeout)
+my.log("Așteaptă 3 secunde...");
+setTimeout(() => {
+  document.getElementById("colorBox").style.background = "orange";
+  my.log("Culoarea s-a schimbat după 3 secunde");
+}, 3000);
+`;
+
+    // Ex 4 – schimbă culoarea la fiecare 5 sec (setInterval)
+    const ex4 = `// EX 4: schimbă background la fiecare 5 secunde (setInterval)
+let culori = ["red", "green", "blue", "purple", "gold"];
+let i = 0;
+
+my.log("Schimb culoarea din 5 în 5 secunde...");
+setInterval(() => {
+  const c = culori[i];
+  document.getElementById("colorBox").style.background = c;
+  my.log("Background: " + c);
+  i = (i + 1) % culori.length;
+}, 5000);
+`;
+
+    // Bonus – exemple tipice (ordine setTimeout / callback)
+    const ex5 = `// BONUS: ordine mesaje (setTimeout) + exemplu callback
+setTimeout(() => { my.log("this is the first message") }, 5000);
+setTimeout(() => { my.log("this is the second message") }, 3000);
+setTimeout(() => { my.log("this is the third message") }, 1000);
+
+my.log("Observă ordinea: third -> second -> first");
+
+function add(x, y, callback) {
+  my.log("start");
+  setTimeout(() => {
+    var ret = x + y;
+    callback(ret);
+  }, 2000);
+}
+add(10, 20, function(ret) {
+  my.log("10 + 20 = " + ret);
+});
+`;
+
+    const arrex = ["", ex1, ex2, ex3, ex4, ex5];
+
+    function loadEx(nr){
+      document.getElementById("textArea").value = arrex[nr] || "";
+    }
+
+    // Încarcă implicit Ex 1
+    loadEx(1);
+  </script>
+</body>
+</html>
