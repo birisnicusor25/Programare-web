@@ -1,0 +1,190 @@
+
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de cumpărături</title>
+</head>
+<body>
+
+<h1>Aplicație Listă de Cumpărături</h1>
+<h2>Gestionează rapid produsele</h2>
+<p>
+    <strong>Adaugă</strong> produse în listă și <b>verifică</b> stocul disponibil.
+</p>
+<img src="shopping.png" alt="Shopping" width="200" height="150" title="Lista de cumpărături">
+
+<hr>
+
+<form onsubmit="return proceseazaFormular(event)">
+    <fieldset>
+        <legend>Adăugare produs</legend>
+
+        Nume produs:
+        <input type="text" name="nume" maxlength="20" size="20" value=""><br><br>
+
+        Cantitate:
+        <input type="number" name="cantitate" max="100" step="1"><br><br>
+
+        Categorie:
+        <select name="categorie" multiple size="4">
+            <option selected>Alimente</option>
+            <option>Electrocasnice</option>
+            <option>Îmbrăcăminte</option>
+            <option>Altele</option>
+        </select><br><br>
+
+        Proprietăți:<br>
+        <input type="checkbox" checked> Fragil<br>
+        <input type="checkbox" disabled> Periculos<br><br>
+
+        Observații:<br>
+        <textarea cols="30" rows="3" readonly>Fără observații</textarea><br><br>
+
+        <input type="submit" value="Adaugă">
+        <input type="reset" value="Reset">
+    </fieldset>
+</form>
+
+<hr>
+
+<table border="1" width="60%" align="center" bgcolor="#f2f2f2">
+    <tr>
+        <th>Nume</th>
+        <th>Categorie</th>
+        <th>Cantitate</th>
+    </tr>
+    <tr valign="middle">
+        <td>Pâine</td>
+        <td>Alimente</td>
+        <td align="center">2</td>
+    </tr>
+    <tr valign="middle">
+        <td>Lapte</td>
+        <td>Alimente</td>
+        <td align="center">3</td>
+    </tr>
+    <tr valign="middle">
+        <td>Tricou</td>
+        <td>Îmbrăcăminte</td>
+        <td align="center">1</td>
+    </tr>
+    <tr>
+        <td colspan="3" align="center">Total produse: 3</td>
+    </tr>
+</table>
+
+<hr>
+
+<ol start="1">
+    <li>Completează formularul</li>
+    <li>Apasă Adaugă</li>
+    <li>Verifică lista</li>
+</ol>
+
+<ul>
+    <li>Alimente</li>
+    <li>Electrocasnice</li>
+    <li>Îmbrăcăminte</li>
+</ul>
+
+<a href="https://www.google.com" target="_blank">Google</a><br>
+<a href="#sus" name="sus">Sus</a>
+
+<div style="height:50px;">
+    <span>Footer aplicație</span>
+</div>
+
+<script>
+var numeMagazin = "SuperShop";
+let numarProduse = 5;
+const versiuneApp = "1.0";
+
+alert(numeMagazin);
+console.log(numarProduse);
+document.write("Versiune aplicație: " + versiuneApp + "<br><br>");
+
+function calculeazaTotal(pret, cantitate) {
+    return pret * cantitate;
+}
+
+const aplicaDiscount = function(total, procent) {
+    return total - (total * procent / 100);
+};
+
+const formatPret = suma => suma.toFixed(2) + " RON";
+
+let total = calculeazaTotal(25.5, 3);
+let totalDiscount = aplicaDiscount(total, 10);
+let rezultatFinal = formatPret(totalDiscount);
+console.log(rezultatFinal);
+
+var produse = [
+    { nume: "Pâine", pret: 5, cantitate: 2, categorie: "Alimente" },
+    { nume: "Lapte", pret: 6, cantitate: 3, categorie: "Alimente" },
+    { nume: "Ouă", pret: 1, cantitate: 10, categorie: "Alimente" },
+    { nume: "Tricou", pret: 50, cantitate: 1, categorie: "Îmbrăcăminte" },
+    { nume: "Cana", pret: 15, cantitate: 2, categorie: "Altele" }
+];
+
+produse.forEach(p => console.log(p));
+
+let totaluri = produse.map(p => p.pret * p.cantitate);
+console.log(totaluri);
+
+var magazin = {
+    nume: "SuperShop",
+    adresa: "Str. Principală 1",
+    produse: produse,
+    afiseazaProduse: function() {
+        this.produse.forEach(p => console.log(p));
+    },
+    calculeazaValoareTotala: function() {
+        return this.produse.reduce((s, p) => s + p.pret * p.cantitate, 0);
+    },
+    gasesteProdus: function(numeProdus) {
+        return this.produse.find(p => p.nume === numeProdus);
+    }
+};
+
+magazin.afiseazaProduse();
+document.write("Valoare totală stoc: " + magazin.calculeazaValoareTotala() + "<br>");
+
+let gasit = magazin.gasesteProdus("Pâine");
+console.log(gasit ? gasit : "Produs negăsit");
+
+let inexistent = magazin.gasesteProdus("Telefon");
+console.log(inexistent ? inexistent : "Produs inexistent");
+
+function proceseazaFormular(event) {
+    event.preventDefault();
+
+    let nume = document.forms[0].elements["nume"].value;
+    let cantitate = document.forms[0].elements["cantitate"].value;
+    let categorie = document.forms[0].elements["categorie"].value;
+
+    if (nume === "") {
+        alert("Numele produsului este obligatoriu");
+        return false;
+    }
+
+    if (cantitate <= 0) {
+        alert("Cantitatea trebuie să fie pozitivă");
+        return false;
+    }
+
+    let produsNou = {
+        nume: nume,
+        pret: 0,
+        cantitate: Number(cantitate),
+        categorie: categorie
+    };
+
+    produse.push(produsNou);
+    console.log("Produs adăugat:", produsNou);
+    return false;
+}
+</script>
+
+</body>
+</html>
