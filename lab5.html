@@ -62,7 +62,6 @@
   </div>
 
   <script>
-    // Consolă proprie (cerință tipică din laborator)
     const my = {
       log: (msg) => {
         const c = document.getElementById('myconsole');
@@ -71,7 +70,6 @@
       }
     };
 
-    // RUN: execută codul din textarea
     function runCode(){
       document.getElementById('myconsole').innerHTML = '';
       try{
@@ -81,15 +79,11 @@
       }
     }
 
-    // CLEAR: șterge textarea + consolă
     function clearAll(){
       document.getElementById('textArea').value = '';
       document.getElementById('myconsole').innerHTML = '';
     }
 
-    // -------- Exerciții (conform PDF) --------
-
-    // Ex 1 – array cu 5 titluri de cărți, afișare sincronă (forEach)
     const ex1 = `// EX 1 (sincron): array cu 5 titluri + afișare numerotată
 let carti = ["Moromeții", "Ion", "Baltagul", "Enigma Otiliei", "Maitreyi"];
 
@@ -98,7 +92,6 @@ carti.forEach((titlu, i) => {
 });
 `;
 
-    // Ex 2 – aceeași afișare, dar asincron: fiecare titlu după 2 sec
     const ex2 = `// EX 2 (asincron): fiecare element se afișează la 2 secunde
 function ArrayPlusDelay(array, delegate, delay) {
   array.forEach((el, i) => {
@@ -115,7 +108,6 @@ ArrayPlusDelay(carti, (el, i) => {
 }, 2000);
 `;
 
-    // Ex 3 – schimbare culoare după 3 sec (setTimeout)
     const ex3 = `// EX 3: schimbă background după 3 secunde (setTimeout)
 my.log("Așteaptă 3 secunde...");
 setTimeout(() => {
@@ -124,7 +116,6 @@ setTimeout(() => {
 }, 3000);
 `;
 
-    // Ex 4 – schimbă culoarea la fiecare 5 sec (setInterval)
     const ex4 = `// EX 4: schimbă background la fiecare 5 secunde (setInterval)
 let culori = ["red", "green", "blue", "purple", "gold"];
 let i = 0;
@@ -138,7 +129,6 @@ setInterval(() => {
 }, 5000);
 `;
 
-    // Bonus – exemple tipice (ordine setTimeout / callback)
     const ex5 = `// BONUS: ordine mesaje (setTimeout) + exemplu callback
 setTimeout(() => { my.log("this is the first message") }, 5000);
 setTimeout(() => { my.log("this is the second message") }, 3000);
@@ -164,7 +154,6 @@ add(10, 20, function(ret) {
       document.getElementById("textArea").value = arrex[nr] || "";
     }
 
-    // Încarcă implicit Ex 1
     loadEx(1);
   </script>
 </body>
