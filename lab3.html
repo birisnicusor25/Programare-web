@@ -90,9 +90,7 @@ function clearAll(){
     document.getElementById("myconsole").innerHTML = "";
 }
 
-/* ================= EXERCITII ================= */
 
-/* EX 1 – Array sincron */
 const ex1 = `
 // EX 1 – afișare sincronă
 let carti = ["Moromeții", "Ion", "Baltagul", "Enigma Otiliei", "Maitreyi"];
@@ -102,7 +100,6 @@ carti.forEach((titlu, i) => {
 });
 `;
 
-/* EX 2 – Array asincron */
 const ex2 = `
 // EX 2 – afișare asincronă (2 sec)
 function ArrayPlusDelay(array, delegate, delay){
@@ -120,7 +117,6 @@ ArrayPlusDelay(carti, (el, i) => {
 }, 2000);
 `;
 
-/* EX 3 – setTimeout */
 const ex3 = `
 // EX 3 – schimbare culoare după 3 sec
 my.log("Așteaptă 3 secunde...");
@@ -130,7 +126,6 @@ setTimeout(() => {
 }, 3000);
 `;
 
-/* EX 4 – setInterval */
 const ex4 = `
 // EX 4 – schimbare culoare la fiecare 5 sec
 let culori = ["red", "green", "blue", "purple"];
@@ -143,7 +138,6 @@ setInterval(() => {
 }, 5000);
 `;
 
-/* EX 5 – Exemple async + callback */
 const ex5 = `
 // EX 5 – ordine setTimeout
 setTimeout(() => { my.log("this is the first message") }, 5000);
