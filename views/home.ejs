@@ -1,0 +1,9 @@
+<h1>Home</h1>
+
+<a href="/login">Login</a><br>
+<a href="/register">Register</a>
+
+<% if (user) { %>
+    <p>Logat ca <%= user.email %></p>
+    <a href="/shop">Mergi la shop</a>
+<% } %>

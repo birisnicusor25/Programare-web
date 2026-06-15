@@ -1,0 +1,18 @@
+<h1>Bun venit, <%= user.email %></h1>
+
+<p>Vizite în sesiune: <%= views %></p>
+
+<% if (tema === "dark") { %>
+<p>Dark mode activ</p>
+<% } %>
+
+<ul>
+    <% produse.forEach(p => { %>
+        <li>
+            <%= p.nume %>
+            <a href="/shop/<%= p.id %>">Detalii</a>
+        </li>
+    <% }) %>
+</ul>
+
+<a href="/logout">Logout</a>
