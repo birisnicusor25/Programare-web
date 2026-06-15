@@ -1,17 +1,16 @@
 {
-  "name": "lab6",
+  "name": "lab 6",
   "version": "1.0.0",
-  "description": "Tema practica L06 - Node.js, Express, EJS, Sesiuni",
+  "description": "Node.js login app",
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
   },
   "dependencies": {
-    "bcryptjs": "^2.4.3",
-    "cookie-parser": "^1.4.6",
-    "dotenv": "^16.4.5",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.6.1",
     "ejs": "^3.1.10",
-    "express": "^4.19.2",
-    "express-session": "^1.18.1"
+    "express": "^4.22.2",
+    "express-session": "^1.19.0"
   }
 }
