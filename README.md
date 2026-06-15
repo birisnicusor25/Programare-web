@@ -8,7 +8,7 @@
 3. Deschide în browser:
    http://localhost:3000
 4. Inregistrare cu creeare de cont:
-   Nume, Mail ( ex: Nicu@test.ro ) Parola
+   Nume, Mail ( ex: test@gmail.com ) Parola: 1234
    
 - Permite **înregistrarea** și **autentificarea** utilizatorilor.
 - Menține utilizatorul logat folosind **sesiuni**.
