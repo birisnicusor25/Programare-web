@@ -1,56 +1,40 @@
-
 require("dotenv").config();
 
 const express = require("express");
-const path = require("path");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
 
 const logger = require("./middleware/logger");
 const authRoutes = require("./routes/auth");
-const libraryRoutes = require("./routes/library");
+const shopRoutes = require("./routes/shop");
 
 const app = express();
 
-// View engine EJS
 app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
 
-// Body parsing (form POST)
 app.use(express.urlencoded({ extended: true }));
-
-// Cookies (pentru cookie propriu)
 app.use(cookieParser());
 
-// Sessions
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "dev-secret",
+// sesiuni
+app.use(session({
+    secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true
-      // secure: true // activează doar pe https
-    }
-  })
-);
+    saveUninitialized: true
+}));
 
-// Middleware custom logger (cerință)
 app.use(logger);
 
-// Home public
+// home
 app.get("/", (req, res) => {
-  res.render("home", { user: req.session.user || null });
+    res.render("home", { user: req.session.user });
 });
 
-// Rute auth
+// rute
 app.use("/", authRoutes);
+app.use("/shop", shopRoutes);
 
-// Rute protejate domeniu
-app.use("/library", libraryRoutes);
-
-// Start server
 const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
-  console.log(`✅ Server: http://localhost:${PORT}`);
+    console.log("Server pornit pe port", PORT);
 });
